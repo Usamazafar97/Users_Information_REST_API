@@ -24,10 +24,13 @@ public class UserService {
 
     }
 
+    // get the specific user with the given id
     public Optional getUser(Integer id) {
 
         Optional optional = Optional.empty();
         for (User user : usersList) {
+
+            // if the item matches, place that item
             if (id == user.getId()) {
                 return Optional.of(user);
             }
@@ -35,4 +38,34 @@ public class UserService {
 
         return optional;
     }
+
+
+    // get all the users
+    public Optional getAllUsers() {
+
+        Optional optional = Optional.empty();
+
+        // if there are still items left in the list
+        if (!usersList.isEmpty()) {
+            return Optional.of(usersList);
+        }
+
+        return optional;
+    }
+
+    // delete the specific user with the given id
+    public String deleteUser(Integer id) {
+        for (User user : usersList) {
+
+            // if the user id matches with one of the items in the list
+            if (id == user.getId()) {
+                usersList.remove(user);
+                return "Successfully removed";
+            }
+        }
+
+        // otherwise
+        return "User Not found";
+    }
+
 }
