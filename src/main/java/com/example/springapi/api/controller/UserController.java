@@ -3,7 +3,9 @@ package com.example.springapi.api.controller;
 import com.example.springapi.api.model.User;
 import com.example.springapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +28,8 @@ public class UserController {
         // if the optional is not empty
         if (user.isPresent()) {
             return (User) user.get();
-        }
-
-        return null;
+        } else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
 
     }
 
@@ -40,10 +41,23 @@ public class UserController {
         // if the optional is not empty
         if (usersList.isPresent()) {
             return (List<User>) usersList.get();
+        } else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+
+    }
+
+    // edit a specific user, given the new user
+    @PutMapping("/user")
+    public User editUser(@RequestBody User user) {
+
+        Optional editedUser = userService.editUser(user);
+
+        // if the optional is not empty
+        if (editedUser.isPresent()) {
+            return (User) editedUser.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
         }
-
-        return null;
-
     }
 
     // delete the specific user based on id

@@ -1,8 +1,6 @@
 package com.example.springapi.service;
-
 import com.example.springapi.api.model.User;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +64,43 @@ public class UserService {
 
         // otherwise
         return "User Not found";
+    }
+
+    // Edit the specific user, based on the given properties
+    public Optional editUser(Integer id, String name, Integer age, String email) {
+
+        Optional optional = Optional.empty();
+
+        for (User user : usersList) {
+
+            // checking the id, and edit the user
+            if (user.getId() == id) {
+
+                user.setAge(age);
+                user.setName(name);
+                user.setEmail(email);
+
+                return Optional.of(user);
+            }
+        }
+
+        return optional;
+    }
+
+    // Edit the specific user, based on the given user
+    public Optional editUser(User user) {
+        Optional optional = Optional.empty();
+
+        for (User singleUser : usersList) {
+
+            // checking the id, and edit the user
+            if (singleUser.getId() == user.getId()) {
+                singleUser.setUser(user);
+                return Optional.of(singleUser);
+            }
+        }
+        return optional;
+
     }
 
 }

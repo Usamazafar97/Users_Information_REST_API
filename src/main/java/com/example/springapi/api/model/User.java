@@ -14,6 +14,13 @@ public class User {
         this.email = email;
     }
 
+    public void setUser(User user) {
+        this.id = user.getId();
+        this.age = user.getAge();
+        this.name = user.getName();
+        this.email = user.getEmail();
+    }
+
     public Integer getId() {
         return id;
     }
